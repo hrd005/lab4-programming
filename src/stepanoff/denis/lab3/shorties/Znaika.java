@@ -1,8 +1,7 @@
 package stepanoff.denis.lab3.shorties;
 
 import stepanoff.denis.lab3.WeightableEntity;
-import stepanoff.denis.lab3.balloon.Basket;
-import stepanoff.denis.lab3.balloon.Sandbag;
+import stepanoff.denis.lab3.balloon.*;
 
 import java.util.Optional;
 
@@ -61,6 +60,51 @@ public class Znaika extends Shorty implements Speakable {
 
     private String produceSpeech() {
         return BASE_SPEECH;
+    }
+
+    public void wokeUpCrew(Crew crew) {
+        crew.forEachMember(CrewMember::wokeAndGetReady);
+    }
+
+    public void orderToPutSandbags(Crew crew, Basket basket) {
+        crew.forEachMember((s) -> s.putSandbag(basket));
+    }
+
+    public Fire produceFire() {
+        return new Fire();
+    }
+
+    public void emptyBalloon(Balloon balloon) {
+        balloon.empty();
+    }
+
+    public void orderToPumpAir(Crew crew, Boiler.Pump pump) {
+        crew.forEachMember((s) -> {
+            pump.getConnection().ifPresent(balloon -> {
+                if (!balloon.isFilled()) {
+                    double percentAmount = pump.pump();
+                    balloon.changeVolume(percentAmount);
+                    System.out.println(s.getName() + " pumped " + percentAmount*100 + "% of balloon volume");
+                }
+            });
+        });
+
+        pump.getConnection().ifPresent(balloon -> {
+            if (!balloon.isFilled()) this.orderToPumpAir(crew, pump);
+        });
+    }
+
+    public void connect(Boiler.Pump pump, Balloon balloon) {
+        balloon.setTemperature(1);
+        pump.connect(balloon);
+    }
+
+    public void disconnect(Boiler.Pump pump) {
+        pump.disconnect();
+    }
+
+    public void cutTheRope(Balloon balloon) {
+        balloon.deattachRope();
     }
 
     public class Arm implements Movable {

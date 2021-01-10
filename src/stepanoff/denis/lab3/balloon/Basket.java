@@ -19,9 +19,9 @@ public class Basket extends WeightableEntity {
 
         this.selfWeight = 23.0;
 
-        while (this.getWeight() <= this.balloon.getUpwardForce()) {
-            this.content.add(Sandbag.getANewOne());
-        }
+        //while (this.getWeight() <= this.balloon.getUpwardForce()) {
+        //    this.content.add(Sandbag.getANewOne());
+        //}
     }
 
     public Balloon getBalloon() {

@@ -6,8 +6,8 @@ import java.util.List;
 public class ShortiesFactory {
 
     private static final List<String> NAMES = Arrays.asList(
-            "Незнайка", "Винтик", "Шпунтик", "Пилюлькин", "Тюбик", "Пулька", "Гусля", "Ворчун", "Молчун", "Торопыжка",
-            "Пончик", "Абоська", "Небоська", "Растеряйка", "Гунька", "Кнопочка", "Стекляшкин", "Мушка", "Цветик",
+            "Незнайка", "Молчун", "Торопыжка",
+            "Гунька", "Кнопочка", "Стекляшкин", "Мушка", "Цветик",
             "Микроша", "Ромашка", "Синеглазка", "Топик", "Белочка", "Галочка", "Ёлочка", "Кисонька", "Заинька",
             "Ласточка", "Кубышка", "Маргаритка", "Снежинка", "Пушинка", "Соломка", "Стрекоза", "Самоцветик", "Медуница",
             "Бублик", "Гвоздик", "Шурупчик", "Смекайло"
@@ -17,7 +17,7 @@ public class ShortiesFactory {
 
     public static Shorty getRandomShorty() {
 
-        return new Shorty() {
+        return new CrewMember() {
             {
                 this.name = NAMES.get((int) (Math.random() * NAMES.size()));;
                 this.selfWeight = Math.random() * SHORTY_WEIGHT_DIAPASON_SIZE + SHORTY_WEIGHT_DIAPASON_START;
