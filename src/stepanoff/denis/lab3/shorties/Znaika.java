@@ -15,6 +15,7 @@ public class Znaika extends CrewMember implements Speakable {
             "dui et, suscipit neque.";
 
     public Arm arm = new Arm();
+    private Compass compass = new Compass();
 
     {
         this.name = "Знайка";
@@ -140,5 +141,10 @@ public class Znaika extends CrewMember implements Speakable {
 
             System.out.println("Znaika raised his hand.");
         }
+    }
+
+    public String getBalloonDirection() {
+        String dir = this.compass.getDirection().name().toLowerCase();
+        return dir.substring(0, 1).toUpperCase() + dir.substring(1);
     }
 }

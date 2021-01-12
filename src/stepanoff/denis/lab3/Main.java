@@ -301,11 +301,17 @@ public class Main {
         }
 
         crowd.clapInHands();
-        new ShortySearcher(crowd).getShorty("Стекяляшкин").performAction();
+        new ShortySearcher(crowd).getShorty("Стекляшкин").performAction();
+        System.out.println("The same percent smaller the crew sees the Town");
 
         while (crowd.getNoisiness() != 0) {
             crowd.silence();
         }
         new ShortySearcher(crowd).getShorty("Цветик").performAction();
+        crowd.clapInHands();
+
+        System.out.println("\n\n");
+
+        System.out.println("The balloon goes to the " + znaika.getBalloonDirection());
     }
 }
