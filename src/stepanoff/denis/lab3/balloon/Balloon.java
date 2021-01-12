@@ -4,13 +4,17 @@ public class Balloon {
 
     private static final int VOLUME = 917;
     private static final int ROPE_LENGTH = 1;
+    private static final int BALLOON_HEIGHT = 10; // meters
     private int currVolume = 426;
     private int temperature = 0; // zero for cold, 1 for heat enough
+
+    private Wind wind = new Wind();
 
     //private int baseUpwardForce = VOLUME*temperature;
     private int upwardForce = this.getBaseUpwardForce(); //will be in kilos, not newtons
 
     private int altitude = 0;
+    private int horizontalOffset = 0;
 
     public int getAltitude() {
         return this.altitude;
@@ -71,6 +75,10 @@ public class Balloon {
     public FlyingState getFlyingState() {
         FlyingState current = this.flyingState;
 
+        if (this.altitude > 10 && !isRopeAttached) {
+            this.horizontalOffset += 1;
+        }
+
         if (Math.round(this.weightCounter.getWeight()) == upwardForce && !isRopeAttached || isRopeAttached && this.altitude == ROPE_LENGTH) {
             this.flyingState = FlyingState.FLYING;
         } else if (Math.round(this.weightCounter.getWeight()) < upwardForce) {
@@ -118,5 +126,17 @@ public class Balloon {
     @Override
     public String toString() {
         return "The balloon [can raise " + this.upwardForce + "]";
+    }
+
+    public double getVisibleSize() {
+        return BALLOON_HEIGHT*100.0/Math.sqrt(altitude*altitude + horizontalOffset*horizontalOffset); // in percents;
+    }
+
+    private class Wind {
+        private final int velocity = (int) (Math.random() * 10);
+
+        public int getVelocity() {
+            return this.velocity;
+        }
     }
 }

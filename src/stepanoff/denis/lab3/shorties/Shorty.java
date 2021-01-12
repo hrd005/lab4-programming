@@ -2,13 +2,11 @@ package stepanoff.denis.lab3.shorties;
 
 import stepanoff.denis.lab3.WeightableEntity;
 
-import java.util.Hashtable;
-
 public abstract class Shorty extends WeightableEntity {
 
     protected String name;
 
-    protected Hashtable<String, SpecialAction> spt = new Hashtable<>();
+    private SpecialAction sp;
 
     //protected Clothing clothing;
 
@@ -34,6 +32,10 @@ public abstract class Shorty extends WeightableEntity {
         else return false;
     }
 
+    public void performAction() {
+        this.sp.doAction();
+    }
+
     public static class Builder {
 
         private final Shorty shorty = ShortiesFactory.getRandomShorty();
@@ -43,8 +45,8 @@ public abstract class Shorty extends WeightableEntity {
             return this;
         }
 
-        public Builder action(String actionTitle, SpecialAction specialAction) {
-            this.shorty.spt.put(actionTitle, specialAction);
+        public Builder action(SpecialAction specialAction) {
+            this.shorty.sp = specialAction;
             return this;
         }
 

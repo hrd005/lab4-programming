@@ -10,6 +10,8 @@ import java.util.List;
 
 public class Crowd implements ShortyCollection {
 
+    private int noisiness = (int)(Math.random()*100); //percents
+
     private static final int MAX_DEFAULT_CROWD_SIZE = 25;
     private static final int MIN_DEFAULT_CROWD_SIZE = 10;
 
@@ -68,7 +70,7 @@ public class Crowd implements ShortyCollection {
     private String getAllNames() {
         return this.shorties.stream().map(Shorty::getName).reduce(
                 (s, ac) -> ac.concat(", " + s)
-        ).orElse(", ").substring(0);
+        ).orElse(", ");
     }
 
     public void addOnGotInjuredListener(GotInjuredListener listener) {
@@ -85,8 +87,30 @@ public class Crowd implements ShortyCollection {
         return this.shorties.toArray(t);
     }
 
+    public void startQuarrel(int duration) {
+        while (duration > 0) {
+            int idx = (int) (Math.random()*this.shorties.size());
+            String pos = Math.random() - 0.5 > 0 ? "полетит!" : "не полетит!";
+            System.out.println(this.shorties.get(idx).name + ": " + pos);
+            duration--;
+        }
+    }
+
     @FunctionalInterface
     public interface GotInjuredListener {
         void onGotInjured(Shorty shorty);
+    }
+
+    public void addSpecialCharacter(Shorty shorty) {
+        this.shorties.add(shorty);
+    }
+
+    public int getNoisiness() {
+        return this.noisiness;
+    }
+
+    public int silence() {
+        this.noisiness *= Math.random();
+        return this.getNoisiness();
     }
 }

@@ -2,6 +2,7 @@ package stepanoff.denis.lab3;
 
 import stepanoff.denis.lab3.balloon.*;
 import stepanoff.denis.lab3.shorties.*;
+import stepanoff.denis.lab3.util.ShortySearcher;
 
 public class Main {
 
@@ -12,7 +13,7 @@ public class Main {
         Siropchik siropchik = new Siropchik();
         Znaika znaika = new Znaika();
 
-        Basket basket = new Basket(siropchik, znaika);
+        Basket basket = new Basket();
         System.out.println(basket + " created");
 
         Crew crew = new Crew(basket);
@@ -26,69 +27,151 @@ public class Main {
             public Boiler produceBoiler() {
                 return new Boiler();
             }
+
+            @Override
+            public void wokeAndGetReady() {
+                this.clothing = new Clothing.Builder().title("Куртка").material("Кожа").build();
+                super.wokeAndGetReady();
+            }
         }
         Vintik vintik = new Vintik();
         crew.acceptNew(vintik);
-        crew.acceptNew(
-                new Shorty.Builder()
-                        .name("Шпунтик")
-                        .action("getReady", () -> { } )
-                        .build()
-        );
-        crew.acceptNew(
-                new Shorty.Builder()
-                        .name("Пулька")
-                        .action("getReady", () -> { } )
-                        .build()
-        );
-        crew.acceptNew(
-                new Shorty.Builder()
-                        .name("Торопыжка")
-                        .action("getReady", () -> { } )
-                        .build()
-        );
-        crew.acceptNew(
-                new Shorty.Builder()
-                        .name("Винтик")
-                        .action("getReady", () -> { } )
-                        .build()
-        );
-        crew.acceptNew(
-                new Shorty.Builder()
-                        .name("Пончик")
-                        .action("getReady", () -> { } )
-                        .build()
-        );
-        crew.acceptNew(
-                new Shorty.Builder()
-                        .name("Авоська")
-                        .action("getReady", () -> { } )
-                        .build()
-        );
-        crew.acceptNew(
-                new Shorty.Builder()
-                        .name("Небоська")
-                        .action("getReady", () -> { } )
-                        .build()
-        );
-        crew.acceptNew(
-                new Shorty.Builder()
-                        .name("Растеряйка")
-                        .action("getReady", () -> { } )
-                        .build()
-        );
-        crew.acceptNew(
-                new Shorty.Builder()
-                        .name("Тюбик")
-                        .action("getReady", () -> { } )
-                        .build()
-        );
-        crew.acceptNew(
-                new Shorty.Builder()
-                        .name("Гусля")
-                        .action("getReady", () -> { } )
-                        .build()
-        );
+
+        crew.acceptNew(new CrewMember() {
+
+            {
+                this.selfWeight = 49.0;
+                this.name = "Шпунтик";
+            }
+
+            @Override
+            public void wokeAndGetReady() {
+                this.clothing = new Clothing.Builder().title("Куртка").material("Кожа").build();
+                super.wokeAndGetReady();
+            }
+        });
+
+        crew.acceptNew(new CrewMember() {
+
+            {
+                this.selfWeight = 53.0;
+                this.name = "Пулька";
+            }
+
+            @Override
+            public void wokeAndGetReady() {
+                this.clothing = new Clothing.Builder().title("Сапоги").material("Кожа").build();
+                super.wokeAndGetReady();
+            }
+        });
+
+        crew.acceptNew(new CrewMember() {
+
+            {
+                this.selfWeight = 40.0;
+                this.name = "Торопыжка";
+            }
+
+            @Override
+            public void wokeAndGetReady() {
+                this.clothing = new Clothing.Builder().title("Костюм-молния").build();
+                super.wokeAndGetReady();
+            }
+        });
+
+        crew.acceptNew(new CrewMember() {
+
+            {
+                this.selfWeight = 61.0;
+                this.name = "Пончик";
+            }
+
+            @Override
+            public void wokeAndGetReady() {
+                this.clothing = new Clothing.Builder()
+                        .title("Костюм с карманами")
+                        .parts("Куртка", "Брюки")
+                        .pockets(17)
+                        .build();
+                super.wokeAndGetReady();
+            }
+        });
+
+        crew.acceptNew(siropchik);
+
+        crew.acceptNew(new CrewMember() {
+
+            {
+                this.name = "Авоська";
+                this.selfWeight = 56.0;
+            }
+
+            @Override
+            public void wokeAndGetReady() {
+                this.clothing = new Clothing.Builder().title("Лыжный костюм").build();
+                super.wokeAndGetReady();
+            }
+        });
+
+        crew.acceptNew(new CrewMember() {
+
+            {
+                this.selfWeight = 49.0;
+                this.name = "Небоська";
+            }
+
+            @Override
+            public void wokeAndGetReady() {
+                this.clothing = new Clothing.Builder()
+                        .title("Полосатый костюм")
+                        .parts("Фуфайка", "Гетры", "Шарф")
+                        .build();
+                super.wokeAndGetReady();
+            }
+        });
+
+        crew.acceptNew(new CrewMember() {
+
+            {
+                this.name = "Растеряйка";
+                this.selfWeight = 43.0;
+            }
+
+            @Override
+            public void wokeAndGetReady() {
+                System.out.println(this.name + " не нашел свою куртку");
+                System.out.println(this.name + " не нашел свою кепку");
+                this.clothing = new Clothing.Builder().title("Зимняя шапка").build();
+                super.wokeAndGetReady();
+            }
+        });
+
+        crew.acceptNew(new CrewMember() {
+
+            {
+                this.selfWeight = 48.0;
+                this.name = "Тюбик";
+            }
+
+            @Override
+            public void wokeAndGetReady() {
+                super.wokeAndGetReady(this.name + " взял краски и кисточку.");
+            }
+        });
+
+        crew.acceptNew(new CrewMember() {
+
+            {
+                this.selfWeight = 47.0;
+                this.name = "Гусля";
+            }
+
+            @Override
+            public void wokeAndGetReady() {
+                super.wokeAndGetReady(this.name + " взял флейту.");
+            }
+        });
+
         class Pilulkin extends CrewMember implements Crowd.GotInjuredListener {
 
             {
@@ -104,15 +187,27 @@ public class Main {
                     System.out.println(shorty.getName() + " got injured but " + this.name + " is far away.");
                 }
             }
+
+            @Override
+            public void wokeAndGetReady() {
+                super.wokeAndGetReady(this.name + " взял аптечку.");
+            }
         }
         Pilulkin pilulkin = new Pilulkin();
         crew.acceptNew(pilulkin);
-        crew.acceptNew(
-                new Shorty.Builder()
-                        .name("Незнайка")
-                        .action("getReady", () -> { } )
-                        .build()
-        );
+
+        crew.acceptNew(new CrewMember() {
+
+            {
+                this.name = "Незнайка";
+                this.selfWeight = 40.0;
+            }
+
+            @Override
+            public void wokeAndGetReady() {
+                super.wokeAndGetReady(this.name + " просто проснулся.");
+            }
+        });
 
         System.out.println(siropchik + " created");
         System.out.println(znaika + " created");
@@ -124,6 +219,17 @@ public class Main {
         Crowd crowd = new Crowd();
         System.out.println(crowd + " created");
         crowd.addOnGotInjuredListener(pilulkin);
+
+        crowd.addSpecialCharacter(new Shorty.Builder().name("Стекляшкин").action(() -> {
+            System.out.println("Стекляшкин наблюдает за шаром в телескоп.");
+            System.out.println("Shorties sees a balloon only in " + basket.getBalloon().getVisibleSize() + "% of real size.");
+        }).build());
+
+        crowd.addSpecialCharacter(new Shorty.Builder().name("Цветик").action(() -> {
+            System.out.println("Цветик читает стихи: \n\tОгромный шар, надутый паром,\n\tПоднялся в воздух он недаром.\n" +
+                    "\tНаш коротышка хоть не птица,\n\tЛетать он все-таки годится.\n\tИ все доступно уж, эхма!\n" +
+                    "\tТеперь для нашего ума!");
+        }).build());
 
         crew.getIntoBasket("Торопыжка");
         crew.getIntoBasket("Незнайка");
@@ -140,6 +246,9 @@ public class Main {
             znaika.orderToPumpAir(crew, boiler.getPump());
             znaika.disconnect(boiler.getPump());
         });
+
+        crowd.startQuarrel((int)(Math.random()*15 + 5));
+
         boiler.warm();
 
         System.out.println("\n\n");
@@ -192,6 +301,11 @@ public class Main {
         }
 
         crowd.clapInHands();
+        new ShortySearcher(crowd).getShorty("Стекяляшкин").performAction();
 
+        while (crowd.getNoisiness() != 0) {
+            crowd.silence();
+        }
+        new ShortySearcher(crowd).getShorty("Цветик").performAction();
     }
 }

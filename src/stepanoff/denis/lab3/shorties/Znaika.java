@@ -5,7 +5,7 @@ import stepanoff.denis.lab3.balloon.*;
 
 import java.util.Optional;
 
-public class Znaika extends Shorty implements Speakable {
+public class Znaika extends CrewMember implements Speakable {
 
     private static final String BASE_SPEECH = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend " +
             "eleifend molestie. Etiam gravida lacus vitae viverra convallis. Nam iaculis purus non est dapibus malesuada. " +
@@ -106,6 +106,9 @@ public class Znaika extends Shorty implements Speakable {
     public void cutTheRope(Balloon balloon) {
         balloon.deattachRope();
     }
+
+    @Override
+    public void wokeAndGetReady() {} // Znaika is already ready. He is responsible.
 
     public class Arm implements Movable {
 

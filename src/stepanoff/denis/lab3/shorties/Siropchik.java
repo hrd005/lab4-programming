@@ -1,6 +1,6 @@
 package stepanoff.denis.lab3.shorties;
 
-public class Siropchik extends Shorty implements Speakable {
+public class Siropchik extends CrewMember implements Speakable {
 
     private boolean isRejoiced = false;
     private boolean isFearingToFly = true;
@@ -37,6 +37,12 @@ public class Siropchik extends Shorty implements Speakable {
 
     public void setFearingToFly(boolean isFearingToFly) {
         this.isFearingToFly = isFearingToFly;
+    }
+
+    @Override
+    public void wokeAndGetReady() {
+        this.clothing = new Clothing.Builder().title("Клетчатый костюм").parts("Брюки", "Пиджак", "Кепка").build();
+        super.wokeAndGetReady();
     }
 
     public class Leg implements Movable {
